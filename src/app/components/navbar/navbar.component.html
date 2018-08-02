@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-sm navbar-dark2">
+  <!--bg-light-->
+  <img style="margin: 0" width="5%" height="5%" class="navbar-brand" routerLink="/home" src="../../../assets/frenchHOrn.png">
+  <button class="navbar-toggler" (click)="collapse=!collapse" type="button" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse" (click)="collapse=true" [hidden]="collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="">About</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="text-special" routerLink="/donor-form">Donate <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="text-special" routerLink="/rental-form">Rent <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="text-special" routerLink="/school/dashboard">School<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="text-special" routerLink="/follow">Follow<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="text-special" routerLink="/organization">Organization<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <!--<ul class="nav navbar-nav ml-auto">-->
+        <!--<a href="#" class="nav-link"><i class="fa fa-camera-retro fa-lg"></i></a>-->
+      <!--<li>-->
+        <!--<a href="#" class="nav-link"><i class="fa fa-twitter fa-lg"></i></a>-->
+      <!--<li>-->
+        <!--<a href="#" class="nav-link"><i class="fa fa-pinterest fa-lg"></i></a>-->
+      <!--<li>-->
+        <!--<a href="#" class="nav-link"><i class="fa fa-facebook fa-lg"></i></a>-->
+      <!--<li>-->
+        <!--<a href="#" class="nav-link"><i class="fa fa-phone fa-lg"></i></a>-->
+    <!--</ul>-->
+  </div>
+</nav>
+

@@ -1,0 +1,63 @@
+<h3 style="margin: 1em" class="header">Follow your instrument</h3>
+
+
+<form style="margin: 1em" [hidden]="showKeyForm" #f="ngForm">
+  <div class="form-group">
+    <label for="key">Key</label>
+    <input ngModel name="key" id="key" #key="ngModel" (change)="log(key)" type="text" class="form-control">
+    <!--<div class="alert alert-danger" *ngIf="key.touched && !key.valid">Key is Required</div>-->
+  </div>
+  <div [hidden]="alertStuff" class="alert alert-warning">
+    <strong>Attention!</strong> Could not find instrument. <a routerLink="/contact">Contact us</a> if this is a mistake
+  </div>
+  <button (click)="findInstrument(f.value.key)" class="btn btn-primary">Find your instrument!</button>
+</form>
+
+<!--<div [hidden]="donor === null">-->
+  <!--<div class="card border-warning mb-3">-->
+    <!--<div class="card-header">Error! Not found</div>-->
+    <!--<div class="card-body">-->
+      <!--<h4 class="card-title">On this date, you donated your instrument</h4>-->
+      <!--<p class="card-text">Sorry! We could not find an instrument with this id. If you believe that this is a mistak</p>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div [hidden]="!(showKeyForm)" *ngIf="dispArray.length === 0">
+  <div class="card border-info mb-3">
+    <div class="card-header">{{ donor.date | date }}</div>
+    <div class="card-body">
+      <h4 class="card-title">On this date, you donated your instrument</h4>
+      <p class="card-text">We at Resonance greatly say thank you. Currently, your instrument is at a school awaiting usage.</p>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="!(showKeyForm && dispArray.length > 0)">
+  <div class="card border-info mb-3">
+    <div class="card-header">{{ donor.date | date }}</div>
+    <div class="card-body">
+      <h4 class="card-title">On this date, you donated your instrument</h4>
+      <p class="card-text">Since {{ donor.date | date }}, your donation has served to benefit {{ dispArray.length }} kids. As an organization,
+      we at Resonance, and these kids listed below, say thank you!</p>
+    </div>
+
+  </div>
+  <div *ngFor="let logs of dispArray" class="card border-primary mb-3">
+    <div class="card-header">{{ logs.date | date }}</div>
+    <div class="card-body">
+      <h4 class="card-title">Your instrument was rented through <strong>{{ logs.schoolName }}</strong></h4>
+      <p class="card-text">The faculty members there want to say this to you: Here would be an example
+      of a message that a faculty member would write to the donor regarding their gratitude in bringing an instrument to their school.</p>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title"><strong>{{ logs.renterFirstName }} {{ logs.renterLastName }} </strong>rented your instrument</h4>
+      <p class="card-text">{{ logs.renterMessage }}</p>
+      <p class="card-text" *ngIf="logs.renterMessage === null">The kid you donated to is very grateful for your contribution.
+      They were able to play in a band for a full year, and they did not have to worry about any financial problems.</p>
+    </div>
+
+  </div>
+</div>
+
+

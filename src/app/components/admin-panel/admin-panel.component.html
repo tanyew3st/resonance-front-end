@@ -1,0 +1,116 @@
+<div>
+  <div *ngFor="let instrument of donatedInstruments">
+    <div class="card list-group-item-info">
+      <div class="row">
+        <button (click)="instrument.showMoveForm = !instrument.showMoveForm" class="btn btn-danger">Move Instrument</button>
+        <button (click)="instrument.showEmail = !instrument.showEmail" class="btn btn-success">Generate Email</button>
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Donation Has Been Requested</p>
+        <p>{{ instrument.condition }}</p>
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory'); logDonation(instrument)"><i class="fa fa-check" ariel-hidden="true"></i> Accept</button>-->
+        <!--<button #deny class="btn btn-danger" (click)="setStatus(instrument.id, 'rejected');"><i class="fa fa-ban" ariel-hidden="true"></i> Deny</button>-->
+        <p (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument.donorFirstName }} {{ instrument.donorLastName }}</p>
+        <p (click)="instrument.showSchool = !instrument.showSchool">{{ instrument.schoolContents?.name }}</p>
+      </div>
+      <form *ngIf="instrument.showMoveForm" #moveForm="ngForm">
+        <div style="width: 9em" class="form-group">
+          <select ngModel name="school" #school="ngModel" name="school" id="school" class="form-control">
+            <option></option>
+            <option *ngFor="let school of allSchools" [value]="school.id">{{ school.name}}</option>
+          </select>
+        </div>
+        <button class="btn btn-danger" (click)="moveInstrument(instrument.id, moveForm.value.school);
+        instrument.showMoveForm = !instrument.showMoveForm">Submit</button>
+      </form>
+      <div class="alert alert-info" *ngIf="instrument.showSchool">
+        <p>Name: {{ instrument.schoolContents?.name }}</p>
+        <p>Address: {{ instrument.schoolContents?.address }}</p>
+        <p>City: {{ instrument.schoolContents?.city }}</p>
+      </div>
+      <div class="alert alert-info" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+        <p>Information: {{ instrument.information }}</p>
+
+      </div>
+      <div class="alert alert-info" *ngIf="instrument.showDonor">
+        <p>First Name : {{ instrument.donorFirstName }}</p>
+        <p>Last Name : {{ instrument.donorLastName }}</p>
+        <p>Email : {{ instrument.donorEmail }}</p>
+        <p>Address: {{ instrument.donorAddress  }}</p>
+      </div>
+    </div>
+
+
+
+    <div [hidden]="!instrument.showEmail">
+      <h4>Pick Up</h4>
+        <p class="m">Because you are one of the first 30 donors, we will check your location and likely give you an instrument pickup if you are nearby!
+        We will be reaching out to you soon. If you are not comfortable with a pickup, respond to our follow-up email expressing so and contact with the faculty below to get your instrument to them.</p>
+      <h4>Message from Resonance</h4>
+        <p class="m">Thank you so much for donating. For us, this may be another instrument, but you have changed the lives of
+            countless children who can now see if music is where their passion lies; see if music is who they want to be; see if music is who they are.
+            Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus nascetur
+            ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.
+            Blandit faucibus proin. Ac aliquam integer adipiscing enim non praesent vis commodo nunc phasellus cubilia ac risus accumsan.
+            Accumsan blandit. Lobortis phasellus non lobortis dit varius mi varius accumsan lobortis. Blandit ante aliquam lacinia
+            lorem lobortis semper morbi col faucibus vitae integer placerat accumsan orci eu mi odio tempus adipiscing adipiscing
+            adipiscing curae consequat feugiat etiam dolore.
+            Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis
+            non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien
+            in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
+      <br>
+      <h4>Message From the School: {{ instrument.schoolContents?.name }}</h4>
+        <p class="m">We are located at: {{ instrument.schoolContents?.address }}</p>
+        <p class="m">{{ instrument.schoolContents?.message }}</p>
+      <br>
+      <h4>Get in touch with faculty!</h4>
+      <div style="margin-bottom: .6em" *ngFor="let facultyMember of instrument.schoolContents?.facultyMembers">
+        <p class="m">{{ facultyMember.position }}</p>
+        <p class="m">{{ facultyMember.firstName }} {{ facultyMember.lastName}}</p>
+        <p class="m">Email: {{ facultyMember.email }}</p>
+        <p class="m">Phone Number: {{ facultyMember.phoneNumber }}</p>
+      </div>
+        <h4>Follow your instrument!</h4>
+        <p class="m">Your special instrument id is <strong>{{ instrument.key }}</strong>!
+            Use this to follow your instrument around as it travels into the hands of children and makes value for itself!</p>
+    </div>
+
+
+
+  <div *ngFor="let instrument of couldaBeenDonated">
+    <div class="card list-group-item-light">
+      <div class="row">
+        <!--<button class="btn btn-danger">Move Instrument</button>-->
+        <button (click)="instrument.showEmail = !instrument.showEmail" class="btn btn-success">Generate Email</button>
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Donation Has Been Requested</p>
+        <p>{{ instrument.condition }}</p>
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory'); logDonation(instrument)"><i class="fa fa-check" ariel-hidden="true"></i> Accept</button>-->
+        <!--<button #deny class="btn btn-danger" (click)="setStatus(instrument.id, 'rejected');"><i class="fa fa-ban" ariel-hidden="true"></i> Deny</button>-->
+        <p (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument?.donorFirstName }} {{ instrument?.donorLastName }}</p>
+      </div>
+      <div>
+
+      </div>
+      <div class="alert alert-info" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+      </div>
+      <div class="alert alert-info" *ngIf="instrument.showDonor">
+        <p>First Name : {{ instrument.donorFirstName }}</p>
+        <p>Last Name : {{ instrument.donorLastName }}</p>
+        <p>Email : {{ instrument.donorEmail }}</p>
+        <p>Address: {{ instrument.donorAddress  }}</p>
+      </div>
+    </div>
+  </div>
+</div>

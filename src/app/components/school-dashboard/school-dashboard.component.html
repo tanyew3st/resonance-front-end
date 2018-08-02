@@ -1,0 +1,551 @@
+<ul [hidden]="dashboard" class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" [ngClass]="{'active show': !currentSchool}" data-toggle="tab" (click)="currentSchool = !currentSchool">My School</a>
+  </li>
+  <li class="nav-item" *ngIf="thisSchool.districtId !== null">
+    <a class="nav-link" [ngClass]="{'active show': currentSchool}" data-toggle="tab" (click)="currentSchool = !currentSchool">District Schools</a>
+  </li>
+</ul>
+
+<div [hidden]="login">
+  <h3 style="margin: 1em;" class="header">School Log-In</h3>
+  <form #q="ngForm" (ngSubmit)="submit3(q)">
+    <div class="margin">
+      <div class="form-group margin">
+        <label for="username">Username</label>
+        <input ngModel name="username" id="username" #username="ngModel" type="text" class="form-control">
+      </div>
+      <div class="form-group margin">
+        <label for="password">Password</label>
+        <input ngModel name="password" id="password" #password="ngModel" type="password" class="form-control">
+      </div>
+      <div style="margin:1em;" *ngIf="incorrectUsernamePassword" class="alert alert-danger">Incorrect Username/Password!</div>
+      <div class="row">
+        <button style="margin: 1em;" class="btn btn-primary">Submit</button>
+        <button class="btn btn-light" routerLink="/school/register"><i class="fa fa-cog" ariel-hidden="true"></i> Register your school</button>
+        <button class="btn btn-outline-primary" routerLink="/district/dashboard">District Page</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<h3 *ngIf="!currentSchool" [hidden]="dashboard" style="margin: 1em;" class="header">{{ schoolName }}</h3>
+<h3 *ngIf="currentSchool" [hidden]="dashboard" style="margin: 1em;" class="header">{{ thisDistrict?.name }} School District</h3>
+<div style="margin-left: 1em; margin-right: 1em;" *ngIf="currentSchool;" class="alert alert-secondary">Message from the district: "{{ thisDistrict?.announcement }}"</div>
+
+
+<form [hidden]="hideCheckbox" #ins="ngForm" (ngSubmit)="submit4(ins)">
+  <div class="row">
+    <div class="margin" *ngFor="let instrument of allInstruments">
+    <div class="form-group check-box margin">
+      <label>
+        <input [checked]="instrument.checked" (change)="instrument.checked = !instrument.checked" type="checkbox" [value]="instrument"> {{ instrument.name }}
+      </label>
+    </div>
+  </div>
+  </div>
+  <button class="btn btn-primary">Submit</button>
+</form>
+
+<form [hidden]="showFacultyForm" #faculty="ngForm">
+  <div class="form-group margin">
+    <label for="firstName">First Name</label>
+    <input ngModel name="firstName" id="firstName" #firstName="ngModel" (change)="log(firstName)" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="lastName">Last Name</label>
+    <input ngModel name="lastName" id="lastName" #lastName="ngModel" (change)="log(lastName)" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="email">Email</label>
+    <input ngModel name="email" id="email" #email="ngModel" (change)="log(email)" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="position">Position</label>
+    <input ngModel name="position" id="position" #position="ngModel" (change)="log(position)" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="phoneNumber">Phone Number</label>
+    <input ngModel name="phoneNumber" id="phoneNumber" #phoneNumber="ngModel" (change)="log(phoneNumber)" type="text" class="form-control">
+  </div>
+  <button class="btn btn-primary" (click)="submitFaculty(faculty); showFacultyForm = !showFacultyForm">Add Faculty Member</button>
+</form>
+
+<div [hidden]="showAllFaculty" class="row">
+    <div *ngFor="let facultyMember of facultyMembers" class="card" style="max-width: 20rem; margin-left: 1em; margin-bottom: 1em">
+      <div class="card-header">{{ facultyMember.position}}</div>
+      <div class="card-body">
+        <h4 class="card-title">{{ facultyMember.firstName }} {{ facultyMember.lastName}}</h4>
+        <p style="margin-left: 0; margin-right: 0" class="card-text">Email: {{ facultyMember.email }}</p>
+        <p style="margin-left: 0; margin-right: 0; margin-top: .4em" class="card-text">Phone Number: {{ facultyMember.phoneNumber }}</p>
+      </div>
+      <button class="btn btn-primary" (click)="deleteFacultyMemberById(facultyMember.id)">Delete</button>
+    </div>
+
+</div>
+
+
+<form [hidden]="showMessage">
+  <div class="form-group margin">
+    <label for="message">Message</label>
+    <textarea [value]="thisSchool.message" rows="5" cols="40" ngModel name="message" id="message" #message="ngModel" (change)="log(message)" type="text" class="form-control"></textarea>
+    <button style="margin-left: 0" (click)="showMessage = !showMessage; updateMessage(message.value)" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+
+<form [hidden] = "instrumentAddFormVisible" #g="ngForm" (ngSubmit)="submitInstrument(g)">
+  <div class="form-group margin">
+    <label for="type">Instrument</label>
+    <select required ngModel name="type" #type="ngModel" name="type" id="type" class="form-control">
+      <option></option>
+      <option *ngFor="let instrument of instrumentTypes" [value]="instrument.name">{{ instrument.name}}</option>
+    </select>
+  </div>
+  <div *ngIf="type.value == 'Violin'" class="form-group margin">
+    <label for="size">Size</label>
+    <select ngModel name="size" #size="ngModel" name="size" id="size" class="form-control">
+      <option></option>
+      <option *ngFor="let size of sizes" [value]="size.name">{{ size.name}}</option>
+    </select>
+  </div>
+  <div class="form-group margin">
+    <label for="brand">Brand</label>
+    <input required ngModel name="brand" id="brand" #brand="ngModel" (change)="log(brand)" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="modelNumber">Model Number</label>
+    <input required ngModel name="modelNumber" id="modelNumber" #modelNumber="ngModel" (change)="log(modelNumber)" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="age">Age (Years)</label>
+    <input required ngModel name="age" id="age" #age="ngModel" (change)="log(age)" type="number" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="condition">Condition</label>
+    <select required ngModel name="condition" #condition="ngModel" name="condition" id="condition" class="form-control">
+      <option></option>
+      <option *ngFor="let condition of conditions" [value]="condition.name">{{ condition.name}}</option>
+    </select>
+  </div>
+  <button (click)="instrumentAddFormVisible = !instrumentAddFormVisible" class="btn btn-primary" [disabled]="!g.valid"> <!--routerLink="/school-pick"-->Submit</button>
+</form>
+
+
+<div [hidden]="dashboard">
+  <div *ngIf="!currentSchool">
+    <button class="btn btn-primary" (click)="reload()"><i class="fa fa-refresh" ariel-hidden="true"></i> Refresh</button>
+    <button class="btn btn-secondary" (click)="hideCheckbox = !hideCheckbox; checkInstruments();"><i class="fa fa-edit" ariel-hidden="true"></i> Manage Instrument Requests</button>
+    <button class="btn btn-dark" (click)="instrumentAddFormVisible=!instrumentAddFormVisible"><i class="fa fa-plus" ariel-hidden="true"></i> Add an Instrument</button>
+    <button class="btn btn-info" (click)="showFacultyForm=!showFacultyForm"><i class="fa fa-user-plus" ariel-hidden="true"></i> Add Faculty</button>
+    <button class="btn btn-danger" (click)="fetchFacultyMembers(); showAllFaculty = !showAllFaculty"><i class="fa fa-users" ariel-hidden="true"></i> Show Faculty</button>
+    <button class="btn btn-link" style="float: right">Get Help</button>
+    <!--<button class="btn btn-outline-primary" (click)="showEdit = !showEdit;">Edit Contents</button>-->
+    <button class="btn btn-outline-primary" (click)="showMessage = !showMessage"><i class="fa fa-comment"></i> Edit Message</button>
+  </div>
+  <br/>
+
+
+  <div [hidden]="currentSchool" style="margin-bottom: 2em">
+
+  <!--DONATION REQUEST-->
+
+
+  <button *ngIf="donationRequested.length > 0" (click)="changeDonationRequested()" class="btn btn-group-toggle">
+    <i *ngIf="donationRequestedCards === true" class="fa fa-caret-up"></i>
+    <i *ngIf="donationRequestedCards === false" class="fa fa-caret-down"></i>
+     {{ donationRequestText }}</button>
+  <div style="margin-left: 1em; margin-right: 1em" *ngIf="donationRequestedCards === true">
+    <div *ngFor="let instrument of donationRequested" class="card list-group-item-info">
+      <div class="row">
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Donation Has Been Requested</p>
+        <p>{{ instrument.condition }}</p>
+        <button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory'); logDonation(instrument)"><i class="fa fa-check" ariel-hidden="true"></i> Accept</button>
+        <button #deny class="btn btn-danger" (click)="setStatus(instrument.id, 'rejected');"><i class="fa fa-ban" ariel-hidden="true"></i> Deny</button>
+        <p (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument.donorFirstName }} {{ instrument.donorLastName}}</p>
+      </div>
+
+      <div class="alert alert-info" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+        <p>Information: {{ instrument.information }}</p>
+      </div>
+      <div class="alert alert-info" *ngIf="instrument.showDonor">
+        <p>First Name : {{ instrument.donorFirstName }}</p>
+        <p>Last Name : {{ instrument.donorLastName }}</p>
+        <p>Email : {{ instrument.donorEmail }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!--TRANFER REQUEST-->
+
+    <button *ngIf="transfer.length > 0" (click)="changeTransfer()" class="btn btn-group-toggle">
+      <i *ngIf="transferCards === true" class="fa fa-caret-up"></i>
+      <i *ngIf="transferCards === false" class="fa fa-caret-down"></i>
+      {{ transferText }}</button>
+    <div style="margin-left: 1em; margin-right: 1em" *ngIf="transferCards === true">
+      <div *ngFor="let instrument of transfer" class="card list-group-item-secondary">
+        <div class="row">
+          <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+          <p>Transfer Has Been Requested</p>
+          <p>{{ instrument.condition }}</p>
+          <button class="btn btn-primary" (click)="changeInstrumentId(instrument);"><i class="fa fa-check" ariel-hidden="true"></i> Accept</button>
+          <button #deny class="btn btn-danger" (click)="setStatus(instrument.id, 'inventory');"><i class="fa fa-ban" ariel-hidden="true"></i> Deny</button>
+          <p *ngIf="instrument.donorFirstName != null" (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument.donorFirstName }} {{ instrument.donorLastName}}</p>
+          <p (click)="instrument.showTransfer = !instrument.showTransfer">Transfer School: {{ instrument.potentialSchoolName }}</p>
+        </div>
+
+        <div class="alert alert-secondary" *ngIf="instrument.showTransfer">
+          <p>Name: {{ instrument.potentialSchoolName }}</p>
+          <p>Address: {{ instrument.potentialSchoolAddress }}</p>
+          <p>Faculty Members</p>
+          <div style="margin:0" *ngFor="let faculty of instrument.potentialSchoolFacultyMembers">
+            <p style="text-indent: 1em">Name: {{ faculty.firstName }} {{ faculty.lastName }}</p>
+            <p style="text-indent: 2em">Position: {{ faculty.title }}</p>
+            <p style="text-indent: 2em">Phone: {{ faculty.phoneNumber }}</p>
+            <p style="text-indent: 2em">Email: {{ faculty.email }}</p>
+          </div>
+        </div>
+        <div class="alert alert-secondary" *ngIf="instrument.showInstrument">
+          <p>Type : {{ instrument.type }}</p>
+          <p>Brand : {{ instrument.brand }}</p>
+          <p>Model Number : {{ instrument.modelNumber }}</p>
+          <p>Condition : {{ instrument.condition }}</p>
+          <p>Age (upon transfer) : {{ instrument.age }}</p>
+          <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+        </div>
+        <div class="alert alert-secondary" *ngIf="instrument.showDonor">
+          <p>First Name : {{ instrument.donorFirstName }}</p>
+          <p>Last Name : {{ instrument.donorLastName }}</p>
+          <p>Email : {{ instrument.donorEmail }}</p>
+        </div>
+      </div>
+    </div>
+
+  <!--RENTAL REQUEST-->
+
+  <button  *ngIf="rentalRequested.length > 0" (click)="changeRentalRequest()" class="btn btn-group-toggle">
+    <i *ngIf="rentalRequestedCards === true" class="fa fa-caret-up"></i>
+    <i *ngIf="rentalRequestedCards === false" class="fa fa-caret-down"></i>
+     {{ rentalRequestedText }}</button>
+  <div style="margin-left: 1em; margin-right: 1em" *ngIf="rentalRequestedCards === true">
+      <div [ngClass]="{'border-primary': newRentalFee > instrument.amountPaid}" *ngFor="let instrument of rentalRequested" class="card list-group-item-warning">
+
+        <div class="row">
+          <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+          <p>Rental Has Been Requested</p>
+          <button #rent class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); logRental(instrument)"><i class="fa fa-external-link" ariel-hidden="true"></i> Rent</button>
+          <button #deny class="btn btn-danger" (click)="setStatus(instrument.id, 'inventory');"><i class="fa fa-ban" ariel-hidden="true"></i> Deny</button>
+          <!--<button class="btn btn-success" ngModel #payButton="ngModel">Pay Button</button>-->
+          <!--#rent class="btn btn-success"--> <button class="btn btn-success" (click)="instrument.showPayment = !instrument.showPayment"><i class="fa fa-dollar" ariel-hidden="true"></i> Pay</button>
+          <form *ngIf="instrument.showPayment" #a = "ngForm" (submit)="addMoney(a, instrument); instrument.showPayment = !instrument.showPayment">
+            <div class="row">
+            <div class="form-group margin">
+              <input style="width: 4rem" ngModel name="pay" #pay="ngModel" type="number" class="form-control">
+            </div>
+            <button class="btn-primary btn">Submit</button>
+            </div>
+          </form>
+          <p *ngIf="instrument.amountPaid < newRentalFee">{{ instrument.amountPaid }} / {{ newRentalFee }}</p>
+          <p *ngIf="instrument.amountPaid == newRentalFee || instrument.amountPaid > newRentalFee">Paid</p>
+          <p *ngIf="instrument.amountPaid > newRentalFee">( {{instrument.amountPaid }} / {{ newRentalFee }} )</p>
+          <!--{{ instrument | json }}-->
+          <p (click)="instrument.showRenter = !instrument.showRenter">Renter: {{ instrument.renterFirstName }} {{ instrument.renterLastName}}</p>
+        </div>
+
+        <div class="alert alert-warning" *ngIf="instrument.showInstrument">
+          <p>Type : {{ instrument.type }}</p>
+          <p>Brand : {{ instrument.brand }}</p>
+          <p>Model Number : {{ instrument.modelNumber }}</p>
+          <p>Condition : {{ instrument.condition }}</p>
+          <p>Age (upon donation) : {{ instrument.age }}</p>
+          <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+        </div>
+        <div class="alert alert-warning" *ngIf="instrument.showRenter">
+          <p>First Name : {{ instrument.renterFirstName }}</p>
+          <p>Last Name : {{ instrument.renterLastName }}</p>
+          <p>Email : {{ instrument.renterEmail }}</p>
+        </div>
+    </div>
+  </div>
+
+
+  <!--INVENTORY-->
+
+
+  <button *ngIf="inventory.length > 0" (click)="changeInventory()" class="btn btn-group-toggle">
+    <i *ngIf="inventoryCards === true" class="fa fa-caret-up"></i>
+    <i *ngIf="inventoryCards === false" class="fa fa-caret-down"></i>
+     {{ inventoryText }}</button>
+  <div style="margin-left: 1em; margin-right: 1em" *ngIf="inventoryCards === true">
+    <div *ngFor="let instrument of inventory" class="card list-group-item-success">
+      <div class="row">
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Inventory</p>
+        <button class="btn btn-danger" (click)="deleteInstrument(instrument.id)"><i class="fa fa-trash" ariel-hidden="true"></i> Delete</button>
+        <button class="btn btn-primary" (click)="setStatus(instrument.id, 'repair')"><i class="fa fa-wrench" ariel-hidden="true"></i> Repair</button>
+
+        <p *ngIf="instrument.donorFirstName != null" (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument.donorFirstName }} {{ instrument.donorLastName}}</p>
+
+        <!--<button class="btn btn-danger" (click)="deleteInstrument(instrument.id)">Delete</button>-->
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); redoStuff();">Accept</button>-->
+        <!--<button class="btn btn-primary" (click)="expand(instrument.id);">Expand</button>-->
+      </div>
+      <div class="alert alert-success" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+      </div>
+      <div class="alert alert-success" *ngIf="instrument.showDonor">
+        <p>First Name : {{ instrument.donorFirstName }}</p>
+        <p>Last Name : {{ instrument.donorLastName }}</p>
+        <p>Email : {{ instrument.donorEmail }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!--REPAIR-->
+
+  <button *ngIf="repair.length > 0" (click)="changeRepair()" class="btn btn-group-toggle">
+    <i *ngIf="repairCards === true" class="fa fa-caret-up"></i>
+    <i *ngIf="repairCards === false" class="fa fa-caret-down"></i>
+    {{ repairText }}</button>
+  <div style="margin-left: 1em; margin-right: 1em" *ngIf="repairCards === true">
+    <div *ngFor="let instrument of repair" class="card list-group-item-light">
+      <div class="row">
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Inventory</p>
+        <button class="btn btn-danger" (click)="deleteInstrument(instrument.id)"><i class="fa fa-trash" ariel-hidden="true"></i> Delete</button>
+        <button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory')"><i class="fa fa-forward" ariel-hidden="true"></i> Inventory</button>
+
+        <p *ngIf="instrument.donorFirstName != null" (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument.donorFirstName }} {{ instrument.donorLastName}}</p>
+
+        <!--<button class="btn btn-danger" (click)="deleteInstrument(instrument.id)">Delete</button>-->
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); redoStuff();">Accept</button>-->
+        <!--<button class="btn btn-primary" (click)="expand(instrument.id);">Expand</button>-->
+      </div>
+      <div class="alert alert-success" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+      </div>
+      <div class="alert alert-success" *ngIf="instrument.showDonor">
+        <p>First Name : {{ instrument.donorFirstName }}</p>
+        <p>Last Name : {{ instrument.donorLastName }}</p>
+        <p>Email : {{ instrument.donorEmail }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!--RENTED OUT-->
+
+  <button *ngIf="rentedOut.length > 0" (click)="changeRentedOut()" class="btn btn-group-toggle">
+    <i *ngIf="rentedOutCards === true" class="fa fa-caret-up"></i>
+    <i *ngIf="rentedOutCards === false" class="fa fa-caret-down"></i>
+     {{ rentedOutText }}</button>
+
+  <div style="margin-left: 1em; margin-right: 1em" *ngIf="rentedOutCards === true">
+    <div [ngClass]="{'border-primary': newRentalFee > instrument.amountPaid}" *ngFor="let instrument of rentedOut" class="card list-group-item-danger">
+
+      <div class="row">
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Rented Out</p>
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); redoStuff()">Accept</button>-->
+        <button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory');"><i class="fa fa-undo"></i> Return</button>
+        <button #rent class="btn btn-success" (click)="instrument.showPayment = !instrument.showPayment"><i class="fa fa-dollar" ariel-hidden="true"></i> Pay</button>
+        <form *ngIf="instrument.showPayment" #a = "ngForm" (submit)="addMoney(a, instrument); instrument.showPayment = !instrument.showPayment">
+          <div class="row">
+            <div class="form-group margin">
+              <input style="width: 4rem" ngModel name="pay" #pay="ngModel" type="number" class="form-control">
+            </div>
+            <button class="btn-primary btn">Submit</button>
+          </div>
+        </form>
+        <p *ngIf="instrument.amountPaid < newRentalFee">{{ instrument.amountPaid }} / {{ newRentalFee }}</p>
+        <p *ngIf="instrument.amountPaid == newRentalFee || instrument.amountPaid > newRentalFee">Paid</p>
+        <p *ngIf="instrument.amountPaid > newRentalFee">( {{instrument.amountPaid }} / {{ newRentalFee }} )</p>
+        <!--{{ instrument | json }}-->
+        <p (click)="instrument.showRenter = !instrument.showRenter">Renter: {{ instrument.renterFirstName }} {{ instrument.renterLastName}}</p>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="instrument.showRenter">
+        <p>First Name : {{ instrument.renterFirstName }}</p>
+        <p>Last Name : {{ instrument.renterLastName }}</p>
+        <p>Email : {{ instrument.renterEmail }}</p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!--<div *ngFor="let instrument of instruments">-->
+    <!--<div *ngIf="instrument.status == 'donationRequested'" class="card list-group-item-info">-->
+      <!--<div class="row">-->
+        <!--<p>{{ instrument.type }}</p>-->
+        <!--<p>Donation Has Been Requested</p>-->
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory');">Accept</button>-->
+        <!--<p>{{ instrument.donorFirstName }} {{ instrument.donorLastName}}</p>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div *ngIf="instrument.status == 'rentalRequested'" class="card list-group-item-warning">-->
+      <!--<div class="row">-->
+        <!--<p>{{ instrument.type }}</p>-->
+        <!--<p>Rental Has Been Requested</p>-->
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut');">Rent</button>-->
+        <!--<p>{{ instrument.renterFirstName }} {{ instrument.renterLastName}}</p>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div *ngIf="instrument.status == 'inventory'" class="card list-group-item-success">-->
+      <!--<div class="row">-->
+        <!--<p>{{ instrument.type }}</p>-->
+        <!--<p>Inventory</p>-->
+        <!--&lt;!&ndash;<button class="btn btn-danger" (click)="deleteInstrument(instrument.id)">Delete</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); redoStuff();">Accept</button>&ndash;&gt;-->
+        <!--&lt;!&ndash;<button class="btn btn-primary" (click)="expand(instrument.id);">Expand</button>&ndash;&gt;-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div *ngIf="instrument.status == 'rentedOut'" class="card list-group-item-danger">-->
+      <!--<div class="row">-->
+        <!--<p>{{ instrument.type }}</p>-->
+        <!--<p>Rented Out</p>-->
+
+        <!--&lt;!&ndash;<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); redoStuff()">Accept</button>&ndash;&gt;-->
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'inventory');">Return</button>-->
+        <!--<p>{{ instrument.renterFirstName }} {{ instrument.renterLastName}}</p>-->
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  </div>
+</div>
+
+
+
+<div [hidden]="!currentSchool">
+
+    <!--<form [hidden]="showSchoolSortForm" #sch="ngForm" (ngSubmit)="filterSchoolsInDistrict(sch); showSchoolSortForm = !showSchoolSortForm">-->
+      <!--<div class="row">-->
+        <!--<div class="margin" *ngFor="let school of schoolsInDistrict">-->
+          <!--<div *ngIf="school.name != schoolName" class="form-group check-box margin">-->
+            <!--<label>-->
+              <!--<input ngModel name="{{school.name}}" #{{school.name}}="ngModel" type="checkbox" [value]="school.id"> {{ school.name }}-->
+            <!--</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<button class="btn btn-primary">Submit</button>-->
+    <!--</form>-->
+
+    <form [hidden]="showInstrumentSortForm" #ins="ngForm" (ngSubmit)="filterInstruments(ins); showInstrumentSortForm = !showInstrumentSortForm">
+      <div class="row">
+        <div class="margin" *ngFor="let instrument of allInstruments">
+          <div class="form-group check-box margin">
+            <label>
+              <input ngModel name="{{instrument.name}}" #{{instrument.name}}="ngModel" type="checkbox" [value]="instrument"> {{ instrument.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+  <div class="row">
+    <button class="btn btn-outline-primary" (click)="showInstrumentSortForm = !showInstrumentSortForm">Sort Instruments</button>
+    <button class="btn btn-primary" (click)="reload()"><i class="fa fa-refresh" ariel-hidden="true"></i> Refresh</button>
+    <!--<button class="btn btn-outline-success" (click)="showSchoolSortForm = !showSchoolSortForm">Sort Schools</button>-->
+  </div>
+  <div *ngFor="let school of schoolsInDistrict; let i = index">
+    <div style="margin: 0" *ngIf="schoolsInDistrict[i].name !== thisSchool.name">
+    <p (click)="schoolsInDistrict[i].show = !schoolsInDistrict[i].show">{{ school.name }}</p>
+    <div *ngIf="!schoolsInDistrict[i].show">
+        <div *ngFor="let instrument of schoolsInDistrict[i].instruments" style="margin: 0">
+      <div  *ngIf="(instrument.status === 'inventory')" style="margin-right: 1em; margin-left: 1em;" class="card list-group-item-success">
+      <div class="row">
+        <p (click)="instrument.showInstrument = !instrument.showInstrument">{{ instrument.type }}</p>
+        <p>Inventory</p>
+        <!--<button class="btn btn-danger" (click)="deleteInstrument(instrument.id)"><i class="fa fa-trash" ariel-hidden="true"></i> Request</button>-->
+        <button class="btn btn-primary" (click)="addTransferId(id, instrument.id)"><i class="fa fa-exchange" ariel-hidden="true"></i> Request</button>
+        <p *ngIf="instrument.donorFirstName != null"  (click)="instrument.showDonor = !instrument.showDonor">Donor: {{ instrument.donorFirstName }} {{ instrument.donorLastName}}</p>
+
+        <!--<button class="btn btn-danger" (click)="deleteInstrument(instrument.id)">Delete</button>-->
+        <!--<button class="btn btn-primary" (click)="setStatus(instrument.id, 'rentedOut'); redoStuff();">Accept</button>-->
+        <!--<button class="btn btn-primary" (click)="expand(instrument.id);">Expand</button>-->
+      </div>
+      <div class="alert alert-success" *ngIf="instrument.showInstrument">
+        <p>Type : {{ instrument.type }}</p>
+        <p>Type : {{ instrument.type }}</p>
+        <p>Brand : {{ instrument.brand }}</p>
+        <p>Model Number : {{ instrument.modelNumber }}</p>
+        <p>Condition : {{ instrument.condition }}</p>
+        <p>Age (upon donation) : {{ instrument.age }}</p>
+        <p *ngIf="instrument.size != null">Size : {{ instrument.size }}</p>
+      </div>
+      <div class="alert alert-success" *ngIf="instrument.showDonor">
+        <p>First Name : {{ instrument.donorFirstName }}</p>
+        <p>Last Name : {{ instrument.donorLastName }}</p>
+        <p>Email : {{ instrument.donorEmail }}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+    </div>
+  </div>
+  <br>
+</div>
+
+<!--<h1 style="margin: 1em">School District</h1>-->
+
+<!--<form #r="ngForm">-->
+  <!--<div class="row">-->
+    <!--<div class="margin" *ngFor="let instrument of allInstruments">-->
+      <!--<div class="form-group check-box margin">-->
+        <!--<label>-->
+          <!--<input ngModel name="{{instrument.name}}" #{{instrument.name}}="ngModel" type="checkbox" [value]="instrument"> {{ instrument.name }}-->
+        <!--</label>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<button class="btn btn-primary" (click)="filterSchoolsInDistrict(r.value)">Submit</button>-->
+<!--</form>-->
+<!--<form #w="ngForm">-->
+  <!--<div class="row">-->
+    <!--<div class="margin" *ngFor="let school of schoolsInDistrict">-->
+      <!--<div class="form-group check-box margin">-->
+        <!--<label>-->
+          <!--<input ngModel name="{{school.name}}" #{{school.name}}="ngModel" type="checkbox" [value]="school"> {{ school.name }}-->
+        <!--</label>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<button class="btn btn-primary" (click)="filterInstruments(r.value)">Submit</button>-->
+<!--</form>-->
+
+<!--<div *ngFor="let school of schoolsInDistrict; let i = index">-->
+  <!--{{ school.name }}-->
+  <!--<div *ngFor="let instrument of schoolsInDistrict[i].instruments">-->
+    <!--{{ instrument.type }}-->
+  <!--</div>-->
+<!--</div>-->
+
+
+

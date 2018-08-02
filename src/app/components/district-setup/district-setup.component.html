@@ -1,0 +1,34 @@
+<h3 style="margin: 1em;" class="header">Register Your District</h3>
+
+<div style="margin: 1em" *ngIf="password">
+  <form #pass="ngForm">
+    <div class="form-group">
+      <label for="code">Code</label>
+      <input ngModel name="code" id="code" #code="ngModel" (change)="log(code)" type="text" class="form-control">
+    </div>
+    <button class="btn btn-primary" (click)="getIn(pass.value.code)"> <!--routerLink="/school-pick"-->Submit</button>
+  </form>
+</div>
+
+<div *ngIf="!password">
+  <form [hidden]="submitted" #f="ngForm" (ngSubmit)="submit(f)">
+    <div class="form-group">
+      <label for="name">District Name</label>
+      <input ngModel name="name" id="name" #name="ngModel" (change)="log(name)" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input ngModel name="username" id="username" #username="ngModel" (change)="log(username)" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input ngModel name="password" id="password" #password="ngModel" (change)="log(password)" type="password" class="form-control">
+    </div>
+
+    <div class="alert alert-danger" *ngIf="usernameTaken === true">Username is taken!</div>
+
+    <button class="btn btn-primary"> <!--routerLink="/school-pick"-->Submit</button>
+    <!--<p>{{ value | json}}</p>-->
+  </form>
+<p [hidden]="!submitted">Awesome - Created! <a routerLink="../dashboard">Log-in here.</a></p>
+</div>

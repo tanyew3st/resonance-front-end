@@ -1,0 +1,79 @@
+<h3 style="margin: 1em;" class="header">Register Your School</h3>
+
+<div style="margin: 1em" *ngIf="password">
+  <form #pass="ngForm">
+    <div class="form-group">
+      <label for="code">Code</label>
+      <input ngModel name="code" id="code" #code="ngModel" (change)="log(code)" type="text" class="form-control">
+    </div>
+    <button class="btn btn-primary" (click)="getIn(pass.value.code)"> <!--routerLink="/school-pick"-->Submit</button>
+  </form>
+</div>
+
+<div *ngIf="!password">
+
+  <form [hidden]="submitted" #f="ngForm">
+    <div class="form-group">
+      <label for="name">School Name</label>
+      <input ngModel name="name" id="name" #name="ngModel" (change)="log(name)" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="districtId">District</label>
+      <select required ngModel name="districtId" #districtId="ngModel" name="districtId" id="districtId" class="form-control">
+        <option></option>
+        <option *ngFor="let district of districts" [value]="district.id">{{ district.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input ngModel name="address" id="address" #address="ngModel" (change)="log(address)" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input ngModel name="city" id="city" #city="ngModel" (change)="log(city)" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="state">State</label>
+      <select ngModel name="state" #state="ngModel" name="state" id="state" class="form-control">
+        <option></option>
+        <option value="MO">MO</option>
+        <option value="CA">CA</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="zipCode">Zip</label>
+      <input ngModel name="zipCode" id="zipCode" #zipCode="ngModel" (change)="log(zipCode)" type="number" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input ngModel name="username" id="username" #username="ngModel" (change)="log(username)" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input ngModel name="password" id="password" #password="ngModel" (change)="log(password)" type="password" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="rentalFee">Rental Fee</label>
+      <select ngModel name="rentalFee" #rentalFee="ngModel" name="rentalFee" id="rentalFee" class="form-control">
+        <option value="0"></option>
+        <option value="25">$25</option>
+        <option value="50">$50</option>
+      </select>
+    </div>
+    <div class="form-group margin">
+      <label for="message">Message (Mention drop-off, pick-up and general info - you can change this later)</label>
+      <textarea value="school.message" rows="5" cols="40" ngModel name="message" id="message" #message="ngModel" (change)="log(message)" type="text" class="form-control"></textarea>
+    </div>
+    <div class="alert alert-danger" *ngIf="usernameTaken === true">Username is taken!</div>
+
+    <button class="btn btn-primary" (click)="submit(f)"> <!--routerLink="/school-pick"-->Submit</button>
+    <!--<p>{{ value | json}}</p>-->
+  </form>
+
+  <div [hidden]="!submitted">
+    <p class="jasmine-banner">Thank you for registering {{ schoolName }}! Please <a routerLink="../../school/dashboard">log-in</a> to add instrument requests, faculty members, and more.</p>
+  </div>
+
+</div>
+
+

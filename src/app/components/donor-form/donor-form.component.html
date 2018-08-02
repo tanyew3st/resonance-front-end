@@ -1,0 +1,188 @@
+<h3 style="margin: 1em;" class="header">Donation Form</h3>
+<form [hidden] = "showDonor" #f="ngForm" (ngSubmit)="submit(f)">
+  <div>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input required ngModel name="firstName" id="firstName" #firstName="ngModel" (change)="log(firstName)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">First Name is Required</div>
+
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input required ngModel name="lastName" id="lastName" #lastName="ngModel" (change)="log(lastName)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">Last Name is Required</div>
+  </div>
+
+  <div class="form-group">
+    <label for="pickUpAddress">Pickup Address</label>
+    <input required ngModel name="pickUpAddress" id="pickUpAddress" #pickUpAddress="ngModel" (change)="log(pickUpAddress)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="pickUpAddress.touched && !pickUpAddress.valid">Pick Up Address is Required</div>
+
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input required ngModel name="city" id="city" #city="ngModel" (change)="log(city)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="city.touched && !city.valid">City is Required</div>
+
+  </div>
+  <div class="form-group">
+    <label for="state">State</label>
+    <select required ngModel name="state" #state="ngModel" name="state" id="state" class="form-control">
+      <option></option>
+      <option value="MO">MO</option>
+      <option value="CA">CA</option>
+    </select>
+    <div class="alert alert-danger" *ngIf="state.touched && !state.valid">State is Required</div>
+
+  </div>
+  <div class="form-group">
+    <label for="zipCode">Zip</label>
+    <input required ngModel name="zipCode" id="zipCode" #zipCode="ngModel" (change)="log(zipCode)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="zipCode.touched && !zipCode.valid">Zip Code is Required</div>
+
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input required ngModel name="email" id="email" #email="ngModel" (change)="log(email)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="email.touched && !email.valid">Email is Required</div>
+
+  </div>
+  <div class="form-group">
+    <label for="phoneNumber">Phone Number</label>
+    <input required ngModel name="phoneNumber" id="phoneNumber" #phoneNumber="ngModel" (change)="log(phoneNumber)" type="text" class="form-control">
+    <div class="alert alert-danger" *ngIf="phoneNumber.touched && !phoneNumber.valid">Phone Number is Required</div>
+
+  </div>
+  <!--<div class="form-group">-->
+  <!--<label for="instrument">Instrument</label>-->
+  <!--<select ngModel name="instrument" #instrument="ngModel" name="instrument" id="instrument" class="form-control">-->
+  <!--<option></option>-->
+  <!--<option *ngFor="let instrument of instruments" [value]="instrument.name">{{ instrument.name}}</option>-->
+  <!--</select>-->
+  <!--</div>-->
+  <button class="btn btn-primary" [disabled]="!f.valid"> <!--routerLink="/school-pick"-->Continue</button>
+  <!--<p>{{ value | json}}</p>-->
+  </div>
+</form>
+<form [hidden] = "showInstrument" #g="ngForm" (ngSubmit)="submitInstrument(g)">
+  <div>
+  <div class="form-group">
+    <label for="type">Instrument</label>
+    <select required ngModel name="type" #type="ngModel" name="type" id="type" class="form-control">
+      <option></option>
+      <option *ngFor="let instrument of instruments" [value]="instrument.name">{{ instrument.name}}</option>
+    </select>
+  </div>
+  <div *ngIf="type.value == 'Violin'" class="form-group">
+    <label for="size">Size</label>
+    <select ngModel name="size" #size="ngModel" name="size" id="size" class="form-control">
+      <option></option>
+      <option *ngFor="let size of sizes" [value]="size.name">{{ size.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="brand">Brand</label>
+    <input required ngModel name="brand" id="brand" #brand="ngModel" (change)="log(brand)" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="modelNumber">Model Number</label>
+    <input required ngModel name="modelNumber" id="modelNumber" #modelNumber="ngModel" (change)="log(modelNumber)" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="age">Age (Years)</label>
+    <input required ngModel name="age" id="age" #age="ngModel" (change)="log(age)" type="number" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="condition">Condition</label>
+    <select required ngModel name="condition" #condition="ngModel" name="condition" id="condition" class="form-control">
+      <option></option>
+      <option *ngFor="let condition of conditions" [value]="condition.name">{{ condition.name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="information">Information</label>
+    <textarea rows="5" cols="40" ngModel name="information" id="information" #information="ngModel" type="text" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-primary" [disabled]="!type.valid && !brand.valid" (click)="continue(g)">Continue</button>
+  <div class="form-group">
+    <label for="schoolId">School</label>
+    <select required [disabled]="schoolOptionDisabled"  ngModel name="schoolId" #schoolId="ngModel" name="schoolId" id="schoolId" class="form-control">
+      <option></option>
+      <option *ngFor="let school of checkedSchools" [value]="school.id">{{ school.name}}</option>
+    </select>
+  </div>
+    <button (click)="closeItOff(g); showInstrument = !showInstrument" class="btn btn-primary" [disabled]="!g.valid"> <!--routerLink="/school-pick"-->Submit</button>
+    <p>No schools accepting instruments? <a routerLink="/home">Reach out and we'll make it happen</a></p>
+  </div>
+</form>
+<div [hidden]="facultyMembersHidden">
+  <div class="card border-danger mb-3">
+    <div class="card-header">Pick Up</div>
+    <div class="card-body">
+      <p style="margin: 0; padding: 0" class="card-text">Because you are one of the first 30 donors, we will check your location and likely give you an instrument pickup if you are nearby!
+       We will be reaching out to you soon. If you are not comfortable with a pickup, respond to our follow-up email expressing so and
+      contact the faculty below to get your instrument to them.</p>
+    </div>
+  </div>
+  <div class="card border-primary mb-3">
+    <div class="card-header">Message from Resonance</div>
+    <div class="card-body">
+      <p style="margin: 0; padding: 0" class="card-text">Thank you so much for donating. For us, this may be another instrument, but you have changed the lives of
+        countless children who can now see if music is where their passion lies; see if music is who they want to be; see if music is who they are.
+        Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus nascetur
+        ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.
+        Blandit faucibus proin. Ac aliquam integer adipiscing enim non praesent vis commodo nunc phasellus cubilia ac risus accumsan.
+        Accumsan blandit. Lobortis phasellus non lobortis dit varius mi varius accumsan lobortis. Blandit ante aliquam lacinia
+        lorem lobortis semper morbi col faucibus vitae integer placerat accumsan orci eu mi odio tempus adipiscing adipiscing
+        adipiscing curae consequat feugiat etiam dolore.
+        Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis
+        non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien
+        in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
+      <p class="card-text"></p>
+    </div>
+  </div>
+  <div class="card border-danger mb-3">
+    <div class="card-header">Message From the School, {{ currentSchool.name }}</div>
+    <div class="card-body">
+      <!--<h4 class="card-title"></h4>-->
+      <p style="margin-bottom: 1em; margin-left: 0; margin-right: 0; margin-top: 0;
+       padding: 0">Here is the school's address: {{ currentSchool.address }}</p>
+      <p style="margin: 0; padding: 0" class="card-text">{{ currentSchool.message }}</p>
+    </div>
+  </div>
+  <div *ngIf="facultyMembers.length > 0" class="card border-info row" style="margin: 1em">
+    <div class="card-header">Get in touch with faculty!</div>
+    <div style="margin: 0" class="row">
+      <div *ngFor="let facultyMember of facultyMembers" class="card border-dark" style="max-width: 20rem; margin-left: 1em; margin-bottom: 1em; text-align: center;">
+        <div class="card-header">{{ facultyMember.position }}</div>
+        <div class="card-body">
+          <h4 class="card-title">{{ facultyMember.firstName }} {{ facultyMember.lastName}}</h4>
+          <p style="margin-left: 0; margin-right: 0" class="card-text">Email: {{ facultyMember.email }}</p>
+          <p style="margin-left: 0; margin-right: 0; margin-top: .4em" class="card-text">Phone Number: {{ facultyMember.phoneNumber }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card border-warning mb-3">
+    <div class="card-header">Follow your instrument!</div>
+    <div class="card-body">
+      <!--<h4 class="card-title"></h4>-->
+      <p style="margin: 0; padding: 0" class="card-text">Your special instrument id is <strong>{{ crazyKey }}</strong>!
+      Use this to follow your instrument around as it travels into the hands of children and makes value for itself!</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="bod">
+<section id="footer">
+  <ul class="icons">
+    <li><a href="#" class="icon alt fa fa-twitter"><span class="label">Twitter</span></a></li>
+    <li><a href="#" class="icon alt fa fa-facebook"><span class="label">Facebook</span></a></li>
+    <li><a href="#" class="icon alt fa fa-instagram"><span class="label">Instagram</span></a></li>
+    <li><a href="#" class="icon alt fa fa-github"><span class="label">GitHub</span></a></li>
+    <li><a href="#" class="icon alt fa fa-envelope"><span class="label">Email</span></a></li>
+  </ul>
+</section>
+
+</div>
