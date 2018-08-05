@@ -99,7 +99,7 @@
     <label for="type">Instrument</label>
     <select required ngModel name="type" #type="ngModel" name="type" id="type" class="form-control">
       <option></option>
-      <option *ngFor="let instrument of instrumentTypes" [value]="instrument.name">{{ instrument.name}}</option>
+      <option *ngFor="let instrument of allInstruments" [value]="instrument.name">{{ instrument.name}}</option>
     </select>
   </div>
   <div *ngIf="type.value == 'Violin'" class="form-group margin">

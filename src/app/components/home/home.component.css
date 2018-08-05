@@ -44,14 +44,14 @@
   /*list-style: none;*/
 /*}*/
 
-/*blockquote, q {*/
-  /*quotes: none;*/
-/*}*/
+blockquote, q {
+  quotes: none;
+}
 
-/*blockquote:before, blockquote:after, q:before, q:after {*/
-  /*content: '';*/
-  /*content: none;*/
-/*}*/
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
 
 /*table {*/
   /*border-collapse: collapse;*/
@@ -204,12 +204,12 @@
   /*margin: 3em 0;*/
 /*}*/
 
-/*blockquote {*/
-  /*border-left: solid 4px rgba(144, 144, 144, 0.5);*/
-  /*font-style: italic;*/
-  /*margin: 0 0 2em 0;*/
-  /*padding: 0.5em 0 0.5em 2em;*/
-/*}*/
+blockquote {
+  border-left: solid 4px rgba(144, 144, 144, 0.5);
+  font-style: italic;
+  margin: 0 0 2em 0;
+  padding: 0.5em 0 0.5em 2em;
+}
 
 /*code {*/
   /*background: rgba(144, 144, 144, 0.075);*/
@@ -3517,6 +3517,10 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE)
  */
 
+.cool-teal {
+  color: rgba(33, 63, 74, 0.56);
+}
+
 .service-margin {
   margin-top: 5em;
   margin-bottom: 5em;
@@ -3579,6 +3583,18 @@ section h3.section-subheading {
   }
 }
 
+@media (min-width: 300px) {
+  .blockquote-margin {
+    margin: 1em;
+  }
+}
+@media (min-width: 768px ) {
+  .blockquote-margin {
+    margin: 5em;
+  }
+}
+
+
 .btn {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700;
@@ -3590,14 +3606,15 @@ section h3.section-subheading {
 
 }
 
-.btn-primary {
+.btn-primary-2 {
   border-style: solid;
   background-color: Transparent;
   margin: 2em;
   border-color: #ffffff;
 }
 
-.btn-primary:active, .btn-primary:focus, .btn-primary:hover {
+
+.btn-primary-2:active, .btn-primary-2:focus, .btn-primary-2:hover {
   /*background-color: #484848; !important*/
   /*border-color: #484848; !important*/
   color: white;
@@ -4051,6 +4068,7 @@ header.masthead .intro-text .intro-heading {
 
 .timeline .timeline-heading h4.subheading {
   text-transform: none;
+  color: gray;
 }
 
 .timeline .timeline-body > ul,

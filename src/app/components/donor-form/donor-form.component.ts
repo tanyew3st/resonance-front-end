@@ -27,11 +27,21 @@ export class DonorFormComponent implements OnInit {
   crazyKey: any;
 
   instruments = [
-    {id: 1, name: 'Trumpet'},
-    {id: 2, name: 'Tuba'},
-    {id: 3, name: 'Trombone'},
-    {id: 4, name: 'Violin'},
-    {id: 5, name: 'Viola'},
+    {id: 1, name: 'Trumpet', checked: false},
+    {id: 2, name: 'Tuba', checked: false},
+    {id: 3, name: 'Trombone', checked: false},
+    {id: 4, name: 'French Horn', checked: false},
+    {id: 5, name: 'Flute', checked: false},
+    {id: 5, name: 'Clarinet', checked: false},
+    {id: 5, name: 'Baritone', checked: false},
+    {id: 5, name: 'Tuba', checked: false},
+    {id: 5, name: 'Saxophone', checked: false},
+    {id: 5, name: 'Violin', checked: false},
+    {id: 5, name: 'Viola', checked: false},
+    {id: 5, name: 'Cello', checked: false},
+    {id: 5, name: 'Bass', checked: false},
+    {id: 5, name: 'Percussion', checked: false},
+    {id: 5, name: 'Other', checked: false},
   ];
 
   sizes = [
