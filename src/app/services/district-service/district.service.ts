@@ -6,42 +6,44 @@ import {HttpClient} from '@angular/common/http';
 })
 export class DistrictService {
 
+  server = 'http://resonance-2-spring.us-east-1.elasticbeanstalk.com';
+
   constructor(private http: HttpClient) { }
 
   createDistrict(district) {
-    return this.http.post('/api/district', district);
+    return this.http.post(this.server + '/api/district', district);
   }
 
   getUsernames() {
-    return this.http.get('/api/district/usernames');
+    return this.http.get( this.server + '/api/district/usernames');
   }
 
 
   getAllInstruments(id) {
-    return this.http.get('/api/school/' + '/' + id + '/instruments', id);
+    return this.http.get( this.server + '/api/school/' + '/' + id + '/instruments', id);
   }
 
   getDistrict() {
-    return this.http.get('/api/district');
+    return this.http.get( this.server + '/api/district');
   }
 
   getAllSchools(id) {
-    return this.http.get('/api/school/district/' + id);
+    return this.http.get( this.server + '/api/school/district/' + id);
   }
 
   getContentsOfSchool(id) {
-    return this.http.get('/api/school/' + id);
+    return this.http.get( this.server + '/api/school/' + id);
   }
 
   getFacultyMembersBySchool(schoolId) {
-    return this.http.get('/api/faculty/get/' + schoolId);
+    return this.http.get( this.server + '/api/faculty/get/' + schoolId);
   }
 
   getRenter(id) {
-    return this.http.get('/api/renter/' + id);
+    return this.http.get( this.server + '/api/renter/' + id);
   }
 
   updateDistrict(id, district) {
-    return this.http.put('/api/district/' + id, district);
+    return this.http.put(this.server + '/api/district/' + id, district);
   }
 }

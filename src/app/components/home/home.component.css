@@ -3587,10 +3587,16 @@ section h3.section-subheading {
   .blockquote-margin {
     margin: 1em;
   }
+  .cool-teal {
+    font-size: 1.5em;
+  }
 }
 @media (min-width: 768px ) {
   .blockquote-margin {
     margin: 5em;
+  }
+  .cool-teal {
+    font-size: 2em;
   }
 }
 
@@ -3627,7 +3633,7 @@ section h3.section-subheading {
 }
 
 ::selection {
-  background: #4686a0;
+  background: rgba(70, 134, 160, .2);
   text-shadow: none;
 }
 
@@ -4478,3 +4484,23 @@ section {
   margin-right: 0;
 }
 
+.full {
+  width: 100%;
+}
+
+
+.activity {
+  width: 45%;
+}
+
+.year {
+  width: 10%;
+}
+
+.result {
+  width: 45%;
+}
+
+.value-created {
+  width: 10%;
+}

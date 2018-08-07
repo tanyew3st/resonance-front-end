@@ -43,9 +43,9 @@
         <option [value]="instrument.id" *ngFor="let instrument of instrumentInventory">{{ instrument.type }}</option>
       </select>
     </div>
-    <div class="form-group">
-      <p>Don't see an instrument you want? Be put on the <a routerLink="../waiting-list" class="alert-link">waiting list</a></p>
-    </div>
+    <!--<div class="form-group">-->
+      <!--<p>Don't see an instrument you want? Be put on the <a routerLink="../waiting-list" class="alert-link">waiting list</a></p>-->
+    <!--</div>-->
     <button [disabled]="!g.valid" class="btn btn-primary">Submit</button>
   </form>
 

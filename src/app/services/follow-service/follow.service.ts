@@ -6,21 +6,23 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FollowService {
 
+  server = 'http://resonance-2-spring.us-east-1.elasticbeanstalk.com';
+
   constructor(private http: HttpClient) { }
 
   findAllRentals(key) {
-    return this.http.get('/api/log/' + key);
+    return this.http.get(this.server + '/api/log/' + key);
   }
 
   getRenter(id) {
-    return this.http.get('/api/renter/' + id);
+    return this.http.get(this.server + '/api/renter/' + id);
   }
 
   getSchool(id) {
-    return this.http.get( '/api/school/' + id);
+    return this.http.get(this.server + '/api/school/' + id);
   }
 
   getDonorLog(key) {
-    return this.http.get('/api/log/donor/' + key);
+    return this.http.get(this.server + '/api/log/donor/' + key);
   }
 }

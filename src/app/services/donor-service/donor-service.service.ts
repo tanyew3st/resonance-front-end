@@ -10,6 +10,7 @@ export class DonorService {
   private url = '/api/donor';
   private url2 = '/api/instrument';
 
+  server = 'http://resonance-2-spring.us-east-1.elasticbeanstalk.com';
 
   constructor(private http: HttpClient) { }
 
@@ -19,20 +20,20 @@ export class DonorService {
   }
 
   getSchoolById(id) {
-    return this.http.get('/api/school/' + id);
+    return this.http.get(this.server + '/api/school/' + id);
   }
 
   createDonor(donor) {
     console.log(donor);
     console.log(JSON.stringify(donor));
-    return this.http.post(this.url, (donor));
+    return this.http.post(this.server + this.url, (donor));
   }
   getSchools() {
-    return this.http.get('/api/school');
+    return this.http.get(this.server + '/api/school');
   }
 
   getFacultyMembersBySchool(schoolId) {
-    return this.http.get('/api/faculty/get/' + schoolId);
+    return this.http.get(this.server + '/api/faculty/get/' + schoolId);
   }
 
 
@@ -44,15 +45,15 @@ export class DonorService {
   createInstrument(instrument) {
     console.log(instrument);
     console.log(JSON.stringify(instrument));
-    return this.http.post(this.url2, (instrument));
+    return this.http.post(this.server + this.url2, (instrument));
   }
 
   sendId() {
-    console.log('Well');
+    console.log(this.server + 'Well');
   }
 
   getSchoolInstruments(schoolId, instrument) {
-    return this.http.get('/api/type/get/' + schoolId + '/' + instrument);
+    return this.http.get(this.server + '/api/type/get/' + schoolId + '/' + instrument);
   }
 
   // updateDonor(post) {

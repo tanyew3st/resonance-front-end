@@ -38,7 +38,7 @@ export class SchoolDashboardComponent {
     {id: 2, name: 'Tuba', checked: false},
     {id: 3, name: 'Trombone', checked: false},
     {id: 4, name: 'French Horn', checked: false},
-    {id: 5, name: 'Flute’', checked: false},
+    {id: 5, name: 'Flute', checked: false},
     {id: 5, name: 'Clarinet', checked: false},
     {id: 5, name: 'Baritone', checked: false},
     {id: 5, name: 'Tuba', checked: false},

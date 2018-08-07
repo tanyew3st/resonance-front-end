@@ -1,5 +1,5 @@
 <ul [hidden]="dashboard" class="nav nav-tabs">
-  <li class="nav-item">
+  <li class="nav-item" *ngIf="thisSchool.districtId !== null">
     <a class="nav-link" [ngClass]="{'active show': !currentSchool}" data-toggle="tab" (click)="currentSchool = !currentSchool">My School</a>
   </li>
   <li class="nav-item" *ngIf="thisSchool.districtId !== null">
