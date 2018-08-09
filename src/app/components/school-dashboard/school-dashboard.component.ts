@@ -110,7 +110,7 @@ export class SchoolDashboardComponent {
   // deleteInstrument(instrumentId) {
   //   this.service.deleteInstrument(instrumentId)
   //     .subscribe(response => {
-  //       console.log('deleted instrument ' + instrumentId);
+  //
   //     });
   // }
 
@@ -125,11 +125,9 @@ export class SchoolDashboardComponent {
     return this.service.getSchoolsByDistrictId(this.thisSchool.districtId)
       .subscribe(response => {
         if (this.schoolsToUseInDistrict.length < 1) {
-          console.log('in the body');
           this.schoolsToUseInDistrict = response;
         }
         this.schoolsInDistrict = response;
-        console.log('schools to use in district ' + this.schoolsToUseInDistrict);
         this.displaySchools();
       });
   }
@@ -150,7 +148,6 @@ export class SchoolDashboardComponent {
             }
           }
           // this.schoolsInDistrict[i].instruments = res;
-          console.log(this.schoolsInDistrict);
         });
     }
 
@@ -158,15 +155,11 @@ export class SchoolDashboardComponent {
 
   filterSchoolsInDistrict(r) {
     r = r.value;
-    console.log(r);
     this.schoolsToUseInDistrict = [];
 
     for (const school in r) {
       if (r[school] === true) {
-        console.log(school);
         this.schoolsToUseInDistrict.push(school);
-        console.log(r[school]);
-        console.log(this.schoolsToUseInDistrict);
       }
     }
 
@@ -176,15 +169,11 @@ export class SchoolDashboardComponent {
 
   filterInstruments(w) {
     w = w.value;
-    console.log(w);
     this.instrumentsToUse = [];
 
     for (const instrument in w) {
       if (w[instrument] === true) {
-        console.log(instrument);
         this.instrumentsToUse.push(instrument);
-        console.log(w[instrument]);
-        console.log(this.instrumentsToUse);
       }
     }
 
@@ -212,10 +201,8 @@ export class SchoolDashboardComponent {
         instrument.status = 'transfer';
         this.service.updateInstrument(instrumentId, instrument)
           .subscribe(res => {
-            console.log('subscribed');
           });
       });
-    console.log('setting the statussss');
 
   }
 
@@ -230,10 +217,8 @@ export class SchoolDashboardComponent {
     logArray.schoolId = this.id;
     logArray.instrumentId = instrument.id;
 
-    console.log(logArray);
     this.service.createLog(instrument.id, logArray)
       .subscribe(response => {
-        console.log('yah created');
       });
   }
 
@@ -246,10 +231,8 @@ export class SchoolDashboardComponent {
     logArray.schoolId = this.id;
     logArray.instrumentId = instrument.id;
 
-    console.log(logArray);
     this.service.createLog(instrument.id, logArray)
       .subscribe(response => {
-        console.log('yah created');
       });
   }
 
@@ -279,7 +262,6 @@ export class SchoolDashboardComponent {
 
     this.service.updateInstrument(instrument.id, instrument)
       .subscribe(response => {
-        console.log('successss');
         this.setStatus(instrument.id, 'inventory');
       });
   }
@@ -290,12 +272,8 @@ export class SchoolDashboardComponent {
       this.service.getSchoolInstruments(this.id, this.allInstruments[instrument].name)
         .subscribe(response => {
           let ind = instrument;
-          console.log(this.allInstruments[ind].name);
-          console.log('checking the ' + this.allInstruments[ind].name);
-          console.log(response);
           if (response === true) {
             this.allInstruments[instrument].checked = true;
-            console.log('setting ' + this.allInstruments[ind].name + 'to ' + this.allInstruments[ind].checked);
           }
         });
     }
@@ -304,81 +282,62 @@ export class SchoolDashboardComponent {
   updateMessage(message) {
     this.service.updateMessage(message, this.id)
       .subscribe(res => {
-        console.log('updated message');
       });
   }
 
   clearChangesToMake() {
     this.changesToMake = {};
-    console.log('cleared changes');
   }
 
   updateSchool(f) {
     this.changesToMake['id'] = this.id;
-    console.log(this.changesToMake);
 
     this.service.updateSchool(this.id, this.changesToMake)
       .subscribe(response => {
-        console.log('updated and put a school at ' + this.id);
       });
   }
 
   changeRentedOut() {
-    console.log('Change rented out called');
     if (this.rentedOutCards === true) {
-      console.log('rented out cards is TRUE');
       this.rentedOutText = 'Rented Instruments';
     }
     if (this.rentedOutCards === false) {
-      console.log('rented out cards is FALSE');
       this.rentedOutText = 'Rented Instruments';
     }
     this.rentedOutCards = !this.rentedOutCards;
   }
   changeRepair() {
-    console.log('Change repair out called');
     if (this.repairCards === true) {
-      console.log('repair out cards is TRUE');
       this.repairText = 'In Repair (Closed to Rental / Transfer)';
     }
     if (this.repairCards === false) {
-      console.log('rented out cards is FALSE');
       this.repairText = 'In Repair (Closed to Rental / Transfer)';
     }
     this.repairCards = !this.repairCards;
   }
   changeInventory() {
-    console.log('Change rented out called');
     if (this.inventoryCards === true) {
-      console.log('rented out cards is TRUE');
       this.inventoryText = 'Inventory';
     }
     if (this.inventoryCards === false) {
-      console.log('rented out cards is FALSE');
       this.inventoryText = 'Inventory';
     }
     this.inventoryCards = !this.inventoryCards;
   }
   changeRentalRequest() {
-    console.log('Change rented out called');
     if (this.rentalRequestedCards === true) {
-      console.log('rented out cards is TRUE');
       this.rentalRequestedText = 'Rental Requested Instruments';
     }
     if (this.rentalRequestedCards === false) {
-      console.log('rented out cards is FALSE');
       this.rentalRequestedText = 'Rental Requested Instruments';
     }
     this.rentalRequestedCards = !this.rentalRequestedCards;
   }
   changeDonationRequested() {
-    console.log('Change rented out called');
     if (this.donationRequestedCards === true) {
-      console.log('rented out cards is TRUE');
       this.donationRequestText = 'Donation Requests';
     }
     if (this.donationRequestedCards === false) {
-      console.log('rented out cards is FALSE');
       this.donationRequestText = 'Donation Requests';
     }
     this.donationRequestedCards = !this.donationRequestedCards;
@@ -398,26 +357,23 @@ export class SchoolDashboardComponent {
       this.service.getFacultyMembersBySchool(this.id)
         .subscribe(response => {
           this.facultyMembers = response;
-          console.log(this.facultyMembers);
         });
   }
 
   deleteFacultyMemberById(facultyId) {
     this.service.deleteFaculty(facultyId)
       .subscribe(response => {
-        console.log('deleted');
         this.fetchFacultyMembers();
       });
   }
 
   log(x) {
-    // console.log(x);
+    //
   }
 
   pushChange(x) {
     const item: any = [];
     this.changesToMake[x.name] = x.value;
-    console.log(this.changesToMake);
   }
 
   submitFaculty(faculty) {
@@ -430,8 +386,6 @@ export class SchoolDashboardComponent {
     const donor = f;
     this.service.createFaculty(donor)
       .subscribe(response => {
-        console.log(this.value3);
-        console.log(response);
       });
   }
 
@@ -448,15 +402,12 @@ export class SchoolDashboardComponent {
     this.value2.schoolId = this.id;
     this.value2.owner = this.schoolName;
     this.createInstrument(this.value2);
-    console.log(g.value);
   }
 
   createInstrument(f) {
     const instrument = f;
-    console.log('reached here');
     this.service.createInstrument(instrument)
       .subscribe(response => {
-        console.log('yay created');
         this.reload();
       });
   }
@@ -464,31 +415,27 @@ export class SchoolDashboardComponent {
   submit4(ins) {
     this.hideCheckbox = true;
     const formInstrument: any = ins.value;
-   // console.log(ins.value.Trumpet);
+   //
    //  for (let instrument of this.allInstruments) {
-   //    console.log(instrument['id']);
+   //
    //  }
-    console.log(ins);
     this.service.deleteBySchool(this.id)
       .subscribe(response => {
         for (let instrument in formInstrument) {
-          console.log(formInstrument[instrument]);
           // if (formInstrument[instrument] === true) {
-          //   console.log(instrument);
-          //   console.log("reached here!!!");
+          //
+          //
           //   this.service.postInstrumentPreference(this.id, instrument)
           //     .subscribe(response => {
-          //       console.log('yay successs');
+          //
           //     });
           // }
           // if (formInstrument[instrument] === '') {
             for (let instruments in this.allInstruments) {
               if (this.allInstruments[instruments].name === instrument) {
                 if (this.allInstruments[instruments].checked === true) {
-                  console.log(instruments + ' ' + instrument);
                   this.service.postInstrumentPreference(this.id, instrument)
                     .subscribe(response => {
-                      console.log('yay success');
                     });
                 }
   //          }
@@ -502,12 +449,8 @@ export class SchoolDashboardComponent {
     this.service.getSchool()
       .subscribe(response => {
         this.schools = response;
-        console.log(this.schools)
         for (let school of this.schools) {
-          console.log(school.username);
           if (school.username === q.value.username && school.password === q.value.password) {
-            console.log(school);
-            console.log(school.id);
             this.id = school.id;
             this.newRentalFee = school.rentalFee;
             this.login = true;
@@ -515,11 +458,9 @@ export class SchoolDashboardComponent {
             this.proceed(school.rentalFee);
             this.service.getContentsOfSchool(this.id)
               .subscribe(res => {
-                console.log(res);
                 const object: any = res
                 this.schoolName = object.name;
                 this.thisSchool = res;
-                console.log(this.rentalFee);
                 this.getSchoolsInDistrict();
                 // this.fetchFaculty();
               });
@@ -534,22 +475,17 @@ export class SchoolDashboardComponent {
   // adding money using cash payment
 
   addMoney(a, instrument) {
-    console.log(a.value.pay);
-    console.log(instrument.id);
     this.service.addMoneyToRental(instrument.id, a.value.pay)
       .subscribe(response => {
-        console.log(response);
       });
   }
 
   reload() {
-    console.log(this.allInstruments);
 
     this.service.getInstrumentsBySchoolId(this.id)
       .subscribe(response => {
         this.getSchoolsInDistrict();
         this.instruments = response;
-        console.log(this.instruments);
         this.donationRequested = [];
         this.rentalRequested = [];
         this.inventory = [];
@@ -567,7 +503,7 @@ export class SchoolDashboardComponent {
       .subscribe(response => {
         this.rentalFee = rentalFeee;
         this.instruments = response;
-        // console.log(this.instruments);
+        //
         this.fillStatus();
         // this.fillRenterArray();
         // this.fillDonorArray();
@@ -637,7 +573,6 @@ export class SchoolDashboardComponent {
               .subscribe(res => {
                 instrument.potentialSchoolFacultyMembers = res;
                 this.transfer.push(instrument);
-                console.log(instrument.potentialSchoolFacultyMembers);
               });
           });
       }
@@ -645,14 +580,13 @@ export class SchoolDashboardComponent {
     this.fillRenterArray(this.transfer);
     this.fillDonorArray(this.transfer);
 
-    console.log(this.rentalRequested);
   }
 
   // filling renter attributes
 
   fillRenterArray(array) {
     for (let index in array) {
-      // console.log(this.instruments[index].renterId);
+      //
       if (array[index].renterId !== null) {
         this.service.getRenter(array[index].renterId)
           .subscribe(res => {
@@ -661,7 +595,6 @@ export class SchoolDashboardComponent {
             array[index].renterFirstName = renterObject.firstName;
             array[index].renterLastName = renterObject.lastName;
             array[index].renterEmail = renterObject.email;
-            console.log(this.instruments[index]);
           });
       }
     }
@@ -671,19 +604,16 @@ export class SchoolDashboardComponent {
 
   fillDonorArray(array) {
     for (const index in array) {
-      // console.log(this.instruments[index].donorId);
-      console.log(array[index].donorId);
+      //
       if (array[index].donorId !== null) {
         this.service.getDonor(array[index].donorId)
           .subscribe(res => {
             let donorObject: any;
             donorObject = res;
-            console.log(res);
             array[index].donorFirstName = donorObject.firstName;
             array[index].donorPhoneNumber = donorObject.phoneNumber;
             array[index].donorLastName = donorObject.lastName;
             array[index].donorEmail = donorObject.email;
-            console.log(this.instruments[index]);
           });
       }
     }
@@ -695,13 +625,9 @@ export class SchoolDashboardComponent {
 
     this.service.setStatus(id, status)
       .subscribe(response => {
-        console.log('changed the status');
-        console.log('the status should no wbe ' + status);
-        console.log(response);
         this.service.getInstrument(id)
           .subscribe(res => {
             const instrument: any = res;
-            console.log(instrument.status);
           });
       });
   }

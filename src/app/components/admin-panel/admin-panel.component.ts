@@ -38,14 +38,12 @@ export class AdminPanelComponent implements OnInit {
 
   moveInstrument(id, schoolId) {
     let instrument: any;
-    console.log(schoolId);
     this.service.getInstrument(id)
       .subscribe(response => {
         instrument = response;
         instrument.schoolId = schoolId;
         this.service.updateInstrument(id, instrument)
           .subscribe(res => {
-            console.log('oh yeah' + 'just moved the instrument');
           });
       });
   }
@@ -71,7 +69,6 @@ export class AdminPanelComponent implements OnInit {
           instrument.donorEmail = donorObject.email;
           instrument.donorAddress = donorObject.pickUpAddress;
         });
-      console.log(instrument);
     }
   }
 

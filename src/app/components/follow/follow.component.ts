@@ -22,15 +22,12 @@ export class FollowComponent implements OnInit {
   }
 
   log(x) {
-    console.log(x);
   }
 
   findInstrument(key) {
-    console.log(key);
 
     this.service.findAllRentals(key)
       .subscribe(response => {
-        console.log(response);
         this.dispArray = response;
 
         this.service.getDonorLog(key)
@@ -54,13 +51,11 @@ export class FollowComponent implements OnInit {
             });
           this.service.getSchool(this.dispArray[log].schoolId)
             .subscribe(res => {
-              console.log(res);
               const school: any = res;
               this.dispArray[log].schoolName = school.name;
             });
 
         }
-        console.log(this.dispArray);
 
         // if (this.donor === null) {
         //   this.showWarningMessage = false;

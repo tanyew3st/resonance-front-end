@@ -10,7 +10,7 @@ export class DonorService {
   private url = '/api/donor';
   private url2 = '/api/instrument';
 
-  server = 'http://resonance-2-spring.us-east-1.elasticbeanstalk.com';
+  server = 'http://resonance.us-east-1.elasticbeanstalk.com';
 
   constructor(private http: HttpClient) { }
 

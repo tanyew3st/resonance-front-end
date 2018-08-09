@@ -15,6 +15,7 @@ import { FollowComponent } from './components/follow/follow.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { DistrictDashboardComponent } from './components/district-dashboard/district-dashboard.component';
 import { DistrictSetupComponent } from './components/district-setup/district-setup.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DistrictSetupComponent } from './components/district-setup/district-set
     AdminPanelComponent,
     DistrictDashboardComponent,
     DistrictSetupComponent,
+    ContactFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,7 @@ import { DistrictSetupComponent } from './components/district-setup/district-set
       { path: 'admin', component: AdminPanelComponent },
       { path: 'district/register', component: DistrictSetupComponent },
       { path: 'district/dashboard', component: DistrictDashboardComponent },
+      { path: 'contact', component: ContactFormComponent },
       { path: '**', redirectTo: 'home'}
     ])
   ],

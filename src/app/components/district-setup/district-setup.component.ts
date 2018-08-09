@@ -28,7 +28,6 @@ export class DistrictSetupComponent implements OnInit {
 
   getIn(pass) {
     if (pass === 'setup district') {
-      console.log('lets go');
       this.password = !this.password;
     }
   }
@@ -39,11 +38,9 @@ export class DistrictSetupComponent implements OnInit {
     this.schoolName = f.value.schoolName;
 //    this.value.id = DonorFormComponent.id;
 //    DonorFormComponent.id++;
-    console.log(this.usernames);
     for (let username of this.usernames) {
       if (f.value.username === username) {
         this.usernameTaken = true;
-        console.log('username is taken');
         this.finished = false;
       }
     }
@@ -55,17 +52,13 @@ export class DistrictSetupComponent implements OnInit {
 
   createDistrict(f) {
     const district = f;
-    console.log('reached here');
     this.service.createDistrict(district)
       .subscribe(response => {
-        console.log(response);
-        console.log('yay created');
         this.submitted = !this.submitted;
       });
   }
 
   log(g) {
-    console.log(g);
   }
 
 

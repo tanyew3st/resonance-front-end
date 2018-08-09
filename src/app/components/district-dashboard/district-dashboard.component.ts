@@ -27,22 +27,16 @@ export class DistrictDashboardComponent implements OnInit {
     this.currentDistrict.announcement = message;
     this.service.updateDistrict(this.id, this.currentDistrict)
       .subscribe(response => {
-        console.log('updated!');
-      });
+        });
   }
 
   submit3(q) {
     this.service.getDistrict()
       .subscribe(response => {
         this.districts = response;
-        console.log(this.districts)
         for (const district of this.districts) {
-          console.log(district.username);
-
           // Check if the username and password combination matches
           if (district.username === q.value.username && district.password === q.value.password) {
-            console.log(district);
-            console.log(district.id);
             this.currentDistrict = district;
             this.id = district.id;
             this.login = true;
@@ -91,7 +85,6 @@ export class DistrictDashboardComponent implements OnInit {
                       this.service.getFacultyMembersBySchool(instrument.potentialSchool)
                         .subscribe(ress => {
                           instrument.potentialSchoolFacultyMembers = ress;
-                          console.log(instrument.potentialSchoolFacultyMembers);
                         });
                     });
 
@@ -105,7 +98,6 @@ export class DistrictDashboardComponent implements OnInit {
                       instrument.renterFirstName = renterObject.firstName;
                       instrument.renterLastName = renterObject.lastName;
                       instrument.renterEmail = renterObject.email;
-                      console.log(instrument);
                       this.schools[index].instruments.rentalRequested.push(instrument);
                     });
                 }
@@ -117,7 +109,6 @@ export class DistrictDashboardComponent implements OnInit {
                       instrument.renterFirstName = renterObject.firstName;
                       instrument.renterLastName = renterObject.lastName;
                       instrument.renterEmail = renterObject.email;
-                      console.log(instrument);
                       this.schools[index].instruments.rentalRequested.push(instrument);
                       this.schools[index].instruments.rentedOut.push(instrument);
 
@@ -130,7 +121,6 @@ export class DistrictDashboardComponent implements OnInit {
                   this.schools[index].instruments.inventory.push(instrument);
                 }
               }
-              console.log(this.schools[index].instruments);
             });
         }
       });

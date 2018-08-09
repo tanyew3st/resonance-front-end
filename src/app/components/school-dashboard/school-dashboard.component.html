@@ -87,7 +87,7 @@
 
 <form [hidden]="showMessage">
   <div class="form-group margin">
-    <label for="message">Message</label>
+    <label for="message">Message (shown to donors after donating)</label>
     <textarea [value]="thisSchool.message" rows="5" cols="40" ngModel name="message" id="message" #message="ngModel" (change)="log(message)" type="text" class="form-control"></textarea>
     <button style="margin-left: 0" (click)="showMessage = !showMessage; updateMessage(message.value)" class="btn btn-primary">Submit</button>
   </div>

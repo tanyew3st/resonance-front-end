@@ -28,7 +28,7 @@
     <div class="card-header">{{ donor.date | date }}</div>
     <div class="card-body">
       <h4 class="card-title">On this date, you donated your instrument</h4>
-      <p class="card-text">We at Resonance greatly say thank you. Currently, your instrument is at a school awaiting usage.</p>
+      <p class="card-text">We at Viva Music greatly say thank you. Currently, your instrument is at a school awaiting usage.</p>
     </div>
   </div>
 </div>
@@ -39,7 +39,7 @@
     <div class="card-body">
       <h4 class="card-title">On this date, you donated your instrument</h4>
       <p class="card-text">Since {{ donor.date | date }}, your donation has served to benefit {{ dispArray.length }} kids. As an organization,
-      we at Resonance, and these kids listed below, say thank you!</p>
+      we at Viva Music, and these kids listed below, say thank you!</p>
     </div>
 
   </div>
@@ -51,7 +51,7 @@
       create a sustainable and growing fine arts program!</p>
     </div>
     <div class="card-body">
-      <h4 class="card-title"><strong>{{ logs.renterFirstName }} {{ logs.renterLastName }} </strong>rented your instrument</h4>
+      <h4 class="card-title"><strong>A Student at {{ logs.schoolName }} </strong>rented your instrument</h4>
       <p class="card-text">{{ logs.renterMessage }}</p>
       <p class="card-text" *ngIf="logs.renterMessage === null">The kid you donated to is very grateful for your contribution.
       They were able to play in a band for a full year, and they did not have to worry about any financial problems.</p>

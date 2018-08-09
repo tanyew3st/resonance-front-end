@@ -51,47 +51,66 @@
 
 </div>
 <div [hidden]="facultyMembersHidden">
-  <form #m="ngForm" [hidden]="!showThanks">
+  <form #m="ngForm" *ngIf="needsThankYou === true && messageDone === false">
     <div class="form-group margin">
-      <label for="message">Message</label>
+      <label for="message">The instrument you are renting is a donated instrument. Since this was done out of good will, please write a message to the donor.</label>
       <textarea rows="9" cols="40" ngModel name="message" id="message" #message="ngModel" (change)="log(message)" type="text" class="form-control"></textarea>
-      <button style="margin-left: 0" (click)="showThanks = !showThanks; createMessage(message.value)" class="btn btn-primary">Submit</button>
+      <button style="margin-left: 0" (click)="messageDone = !messageDone; createMessage(message.value)" class="btn btn-primary">Submit</button>
     </div>
   </form>
-  <div  *ngIf="thanksDonorMessage === true" [hidden]="showThanks" class="card border-primary mb-3">
-    <div class="card-header">Message from Resonance</div>
+
+
+  <div  *ngIf="needsThankYou && messageDone" class="card border-primary mb-3">
+    <div class="card-header">Message from Viva Music</div>
     <div class="card-body">
       <p style="margin: 0; padding: 0" class="card-text">Thank you so much for writing this message.
-        For us, this may be another instrument, but you have changed the lives of
-        countless children who can now see if music is where their passion lies; see if music is who they want to be; see if music is who they are.
-        Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis n
-        on nisl amet vis volutpat aclacus nascetur
-        ac non. Lorem curae eu ante amet sapien in tempus ac. Adipiscing id accumsan adipiscing ipsum.
-        Blandit faucibus proin. Ac aliquam integer adipiscing enim non praesent vis commodo nunc phasellus cubilia ac risus accumsan.
-        Accumsan blandit. Lobortis phasellus n
-        on lobortis dit varius mi varius accumsan lobortis. Blandit ante aliquam lacinia
-        lorem lobortis semper morbi col faucibus vitae integer placerat accumsan orci eu mi odio tempus adipiscing adipiscing
-        adipiscing curae consequat feugiat etiam dolore.
-        Adipiscing a commodo ante nunc accumsan interdum mi ante adipiscing. A nunc lobortis
-        non nisl amet vis volutpat aclacus nascetur ac non. Lorem curae eu ante amet sapien
-        in tempus ac. Adipiscing id accumsan adipiscing ipsum.</p>
+      Since this instrument was donated out of someone's good will, it is great for them to come back and see a message like this!</p>
       <p class="card-text"></p>
-    </div>
-  </div>
-  <!--<div class="card border-warning mb-3 header">Thanks for Renting! Get in contact with a faculty member to pick up your instrument!</div>-->
-  <div [hidden]="showThanks" class="card border-warning row" style="margin: 1em">
-    <div class="card-header">Thanks for renting! Get in touch with faculty!</div>
-    <div style="margin: 0" class="row">
-    <div *ngFor="let facultyMember of facultyMembers" class="card border-dark" style="max-width: 20rem; margin-left: 1em; margin-bottom: 1em; text-align: center;">
-      <div class="card-header">{{ facultyMember.position }}</div>
-      <div class="card-body">
-        <h4 class="card-title">{{ facultyMember.firstName }} {{ facultyMember.lastName}}</h4>
-        <p style="margin-left: 0; margin-right: 0" class="card-text">Email: {{ facultyMember.email }}</p>
-        <p style="margin-left: 0; margin-right: 0; margin-top: .4em" class="card-text">Phone Number: {{ facultyMember.phoneNumber }}</p>
+
+
+      <div class="card border-warning row" style="margin: 1em" *ngIf="facultyMembers.length > 0">
+        <div class="card-header">Thanks for renting! Get in touch with faculty!</div>
+        <div style="margin: 0" class="row">
+          <div *ngFor="let facultyMember of facultyMembers" class="card border-dark" style="max-width: 20rem; margin-left: 1em; margin-bottom: 1em; text-align: center;">
+            <div class="card-header">{{ facultyMember.position }}</div>
+            <div class="card-body">
+              <h4 class="card-title">{{ facultyMember.firstName }} {{ facultyMember.lastName}}</h4>
+              <p style="margin-left: 0; margin-right: 0" class="card-text">Email: {{ facultyMember.email }}</p>
+              <p style="margin-left: 0; margin-right: 0; margin-top: .4em" class="card-text">Phone Number: {{ facultyMember.phoneNumber }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+
+
+  <div  *ngIf="!needsThankYou" class="card border-primary mb-3">
+    <div class="card-header">Message from Viva Music</div>
+    <div class="card-body">
+      <p style="margin: 0; padding: 0" class="card-text">Thanks for renting from us!
+        Your school has been notified of your rental request.</p>
+      <p class="card-text"></p>
+
+
+      <div class="card border-warning row" style="margin: 1em" *ngIf="facultyMembers.length > 0">
+        <div class="card-header">Thanks for renting! Get in touch with faculty!</div>
+        <div style="margin: 0" class="row">
+          <div *ngFor="let facultyMember of facultyMembers" class="card border-dark" style="max-width: 20rem; margin-left: 1em; margin-bottom: 1em; text-align: center;">
+            <div class="card-header">{{ facultyMember.position }}</div>
+            <div class="card-body">
+              <h4 class="card-title">{{ facultyMember.firstName }} {{ facultyMember.lastName}}</h4>
+              <p style="margin-left: 0; margin-right: 0" class="card-text">Email: {{ facultyMember.email }}</p>
+              <p style="margin-left: 0; margin-right: 0; margin-top: .4em" class="card-text">Phone Number: {{ facultyMember.phoneNumber }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!--<div class="card border-warning mb-3 header">Thanks for Renting! Get in contact with a faculty member to pick up your instrument!</div>-->
+
 </div>
 <div class="bod">
   <section id="footer">

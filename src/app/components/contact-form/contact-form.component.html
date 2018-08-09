@@ -1,0 +1,31 @@
+<h3 style="margin: 1em;" class="header">Contact Form</h3>
+<form #g="ngForm">
+  <div class="form-group margin">
+    <label for="reason">Reason for Contact</label>
+    <input ngModel name="reason" id="reason" #message="ngModel" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="fullName">Full Name</label>
+    <input ngModel name="fullName" id="fullName" #fullName="ngModel" type="text" class="form-control">
+  </div>
+  <div class="form-group margin">
+    <label for="message">Message</label>
+    <textarea rows="5" cols="40" ngModel name="message" id="message" #message="ngModel" type="text" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-primary"><a class="text-light" href="mailto:support@vivamusic.org?
+&amp;subject={{g.value.reason}}
+&amp;body=Hello,%0D%0A%0A{{g.value.message}}%0D%0A%0ASincerely,%0D%0A{{g.value.fullName}}">
+    Contact Us!</a></button>
+</form>
+<div class="bod">
+  <section id="footer">
+    <ul class="icons">
+      <li><a href="#" class="icon alt fa fa-twitter"><span class="label">Twitter</span></a></li>
+      <li><a href="#" class="icon alt fa fa-facebook"><span class="label">Facebook</span></a></li>
+      <li><a href="#" class="icon alt fa fa-instagram"><span class="label">Instagram</span></a></li>
+      <li><a href="#" class="icon alt fa fa-github"><span class="label">GitHub</span></a></li>
+      <li><a href="#" class="icon alt fa fa-envelope"><span class="label">Email</span></a></li>
+    </ul>
+  </section>
+
+</div>

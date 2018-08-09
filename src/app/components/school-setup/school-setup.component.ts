@@ -21,7 +21,6 @@ export class SchoolSetupComponent implements OnInit {
   constructor(private service: SchoolService) { }
 
   ngOnInit() {
-    console.log(this.password);
     this.service.getUsernames()
       .subscribe(response => {
         this.usernames = response;
@@ -33,8 +32,7 @@ export class SchoolSetupComponent implements OnInit {
   }
 
   getIn(pass) {
-    if (pass === '1444') {
-      console.log('lets go');
+    if (pass === '1333') {
       this.password = !this.password;
     }
   }
@@ -45,11 +43,9 @@ export class SchoolSetupComponent implements OnInit {
     this.schoolName = f.value.schoolName;
 //    this.value.id = DonorFormComponent.id;
 //    DonorFormComponent.id++;
-    console.log(this.usernames);
     for (let username of this.usernames) {
       if (f.value.username === username) {
         this.usernameTaken = true;
-        console.log('username is taken');
         this.finished = false;
       }
     }
@@ -61,17 +57,13 @@ export class SchoolSetupComponent implements OnInit {
 
   createSchool(f) {
     const donor = f;
-    console.log('reached here');
     this.service.createSchool(donor)
       .subscribe(response => {
-        console.log(response);
-        console.log('yay created');
         this.submitted = !this.submitted;
       });
   }
 
   log(g) {
-    console.log(g);
   }
 
 

@@ -8,7 +8,7 @@ export class RentalService {
 
   private url = '/api/renter';
 
-  server = 'http://resonance-2-spring.us-east-1.elasticbeanstalk.com';
+  server = 'http://resonance.us-east-1.elasticbeanstalk.com';
 
   constructor(private http: HttpClient) { }
 

@@ -117,7 +117,6 @@ export class DonorFormComponent implements OnInit {
     for (let school of this.schools) {
       this.service.getSchoolInstruments(school.id, instrumentName)
         .subscribe(response => {
-          console.log(response);
           if (response === true) {
             this.checkedSchools.push(school);
           }
